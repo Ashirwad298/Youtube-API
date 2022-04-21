@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All videos</title>
+</head>
+<style>
+  .pagination {
+    margin: 25px 0px;
+    color: blue;
+    
+  }
+  .pagination span {
+    cursor: pointer;
+    margin-right: 20px;
+  }
+
+  .numTotal {
+    display: none;
+  }
+</style>
+<body>
+  <h1>All Videos</h1>
+  <a href="/search"> Search Video</a>
+  <div class="pagination">
+    <span id="prev">Previous Page</span><span id="next">Next Page</span>
+  </div>
+  <div class="numTotal"><%=  numTotal %></div>
+  <div>
+    <% allVideos.forEach(function(vdo){ %>
+      <div><%= vdo %></div>
+      <br>
+    <% }) %>
+  </div>
+</body>
+<script>  
+  let url = window.location.href;
+  console.log(url);
+  const arr = url.split('/');
+  const page = arr[arr.length-1];
+  let pageNum = parseInt(page);
+  
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+
+  prev.addEventListener('click', () => {
+    if(pageNum === 0) alert('Already on the first page');
+    else {
+      const newUrl = `/videos/${pageNum-1}`;
+      window.location.href = newUrl;
+    }
+  })
+
+  const numTotal = parseInt(document.getElementsByClassName('numTotal')[0].innerHTML);
+
+  next.addEventListener('click', () => {
+      if(pageNum === numTotal) alert("You are already on the last page");
+      else {
+        const newUrl = `/videos/${pageNum+1}`;
+      window.location.href = newUrl;
+      }
+      
+  })
+
+</script>
+</html>
+
